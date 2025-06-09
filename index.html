@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senhas Seguras</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </div>
+                <h1 class="header-title">Gerador de Senhas</h1>
+                <p class="header-subtitle">Gere senhas seguras e aleatórias instantaneamente</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Password Display Card -->
+            <section class="password-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        Sua Senha
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="password-input-container">
+                        <input 
+                            type="text" 
+                            id="password-display" 
+                            class="password-input" 
+                            placeholder="Digite ou gere uma senha"
+                            aria-label="Campo de senha - digite ou gere uma senha"
+                        >
+                        <div class="password-actions">
+                            <button 
+                                id="copy-btn" 
+                                class="action-btn" 
+                                title="Copiar senha"
+                                aria-label="Copiar senha para área de transferência"
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                                </svg>
+                            </button>
+                            <button 
+                                id="generate-btn" 
+                                class="action-btn" 
+                                title="Gerar nova senha"
+                                aria-label="Gerar nova senha"
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                                    <path d="M21 3v5h-5"/>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                                    <path d="M8 16H3v5"/>
+                                </svg>
+                            </button>
+                            <button 
+                                id="clear-btn" 
+                                class="action-btn" 
+                                title="Limpar senha"
+                                aria-label="Limpar campo de senha"
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 6L6 18"/>
+                                    <path d="M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Password Strength -->
+                    <div class="strength-container">
+                        <div class="strength-header">
+                            <span class="strength-label">Força da Senha</span>
+                            <span id="strength-text" class="strength-value">Média</span>
+                        </div>
+                        <div class="strength-bar">
+                            <div id="strength-fill" class="strength-fill" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p id="crack-time" class="crack-time">Tempo estimado para quebrar: <strong>Calculando...</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Card -->
+            <section class="settings-card">
+                <div class="card-header">
+                    <h2 class="card-title">Configurações</h2>
+                </div>
+                <div class="card-content">
+                    <!-- Mode Toggle -->
+                    <div class="setting-group">
+                        <h3 class="setting-label">Modo de Geração</h3>
+                        <div class="mode-toggle">
+                            <button id="auto-mode" class="mode-btn active">Automático</button>
+                            <button id="manual-mode" class="mode-btn">Manual</button>
+                        </div>
+                    </div>
+
+                    <!-- Auto Mode Settings -->
+                    <div id="auto-settings" class="mode-settings">
+                        <!-- Length Display -->
+                        <div class="setting-group">
+                            <div class="setting-header">
+                                <label class="setting-label">Comprimento Total</label>
+                                <span id="total-length" class="setting-value">12</span>
+                            </div>
+                        </div>
+
+                        <!-- Character Type Inputs -->
+                        <div class="setting-group">
+                            <h3 class="setting-label">Composição da Senha</h3>
+                            <p class="setting-description">Especifique a quantidade exata de cada tipo de caractere</p>
+                            
+                            <div class="char-inputs">
+                                <div class="char-input-group">
+                                    <label for="uppercase-count" class="char-label">
+                                        <span class="char-icon">A</span>
+                                        Maiúsculas
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="number-btn minus" data-target="uppercase-count">-</button>
+                                        <input type="number" id="uppercase-count" class="char-count" value="4" min="0" max="50" aria-label="Quantidade de letras maiúsculas">
+                                        <button type="button" class="number-btn plus" data-target="uppercase-count">+</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="char-input-group">
+                                    <label for="lowercase-count" class="char-label">
+                                        <span class="char-icon">a</span>
+                                        Minúsculas
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="number-btn minus" data-target="lowercase-count">-</button>
+                                        <input type="number" id="lowercase-count" class="char-count" value="4" min="0" max="50" aria-label="Quantidade de letras minúsculas">
+                                        <button type="button" class="number-btn plus" data-target="lowercase-count">+</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="char-input-group">
+                                    <label for="numbers-count" class="char-label">
+                                        <span class="char-icon">1</span>
+                                        Números
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="number-btn minus" data-target="numbers-count">-</button>
+                                        <input type="number" id="numbers-count" class="char-count" value="2" min="0" max="50" aria-label="Quantidade de números">
+                                        <button type="button" class="number-btn plus" data-target="numbers-count">+</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="char-input-group">
+                                    <label for="symbols-count" class="char-label">
+                                        <span class="char-icon">@</span>
+                                        Símbolos
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="number-btn minus" data-target="symbols-count">-</button>
+                                        <input type="number" id="symbols-count" class="char-count" value="2" min="0" max="50" aria-label="Quantidade de símbolos">
+                                        <button type="button" class="number-btn plus" data-target="symbols-count">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Mode Settings -->
+                    <div id="manual-settings" class="mode-settings" style="display: none;">
+                        <div class="setting-group">
+                            <h3 class="setting-label">Modo Manual</h3>
+                            <p class="setting-description">Digite sua própria senha no campo acima. A análise de força será feita automaticamente.</p>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Options -->
+                    <div class="setting-group">
+                        <h3 class="setting-label">Opções Avançadas</h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="avoid-similar" checked>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Evitar caracteres similares (1, l, I, 0, O)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="avoid-ambiguous">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Evitar caracteres ambíguos ({}, [], (), /\, etc)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="ensure-each-type">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Garantir pelo menos um de cada tipo selecionado</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="error-message" class="error-message" role="alert" style="display: none;">
+                        Selecione pelo menos um caractere
+                    </div>
+
+                    <button id="generate-new-btn" class="generate-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                            <path d="M21 3v5h-5"/>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                            <path d="M8 16H3v5"/>
+                        </svg>
+                        Gerar Nova Senha
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Security Tips -->
+        <section class="tips-card">
+            <div class="card-header">
+                <h2 class="card-title">Dicas de Segurança</h2>
+            </div>
+            <div class="card-content">
+                <div class="tips-grid">
+                    <div class="tips-column">
+                        <h4 class="tips-title good">✅ Faça:</h4>
+                        <ul class="tips-list">
+                            <li>Use senhas únicas para cada conta</li>
+                            <li>Prefira senhas com 12+ caracteres</li>
+                            <li>Use um gerenciador de senhas</li>
+                            <li>Ative autenticação de dois fatores</li>
+                        </ul>
+                    </div>
+                    <div class="tips-column">
+                        <h4 class="tips-title bad">❌ Evite:</h4>
+                        <ul class="tips-list">
+                            <li>Informações pessoais nas senhas</li>
+                            <li>Reutilizar senhas importantes</li>
+                            <li>Compartilhar senhas por mensagem</li>
+                            <li>Usar senhas óbvias ou comuns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert" aria-live="polite">
+            <div class="toast-content">
+                <span id="toast-message">Senha copiada!</span>
+                <button id="toast-close" class="toast-close" aria-label="Fechar notificação">×</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Contact Button -->
+    <div class="floating-contact">
+        <button class="floating-contact-btn" onclick="window.location.href='2.html'" aria-label="Entre em contato">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <span class="floating-contact-text">Sobre o autor</span>
+        </button>
+    </div>
+
+    <script src="xn.js"></script>
+</body>
+</html>
