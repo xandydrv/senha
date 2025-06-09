@@ -4,625 +4,278 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Senhas Seguras</title>
-    <link rel="stylesheet" href="apresentacao-styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<style>
-
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  /* Body */
-  body {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, sans-serif;
-    overflow: hidden;
-    height: 100vh;
-    background-color: #0d1a2f; /* Deep dark blue */
-  }
-
-  /* Container */
-  .presentation-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #0d1a2f; /* Matching deep dark blue */
-    color: white;
-  }
-
-  /* Animated Background */
-  .animated-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
-
-  .grid-pattern {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(
-        rgba(255, 255, 255, 0.08) 1px,
-        transparent 1px
-      ),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: gridMove 20s linear infinite;
-    opacity: 0.4;
-  }
-
-  @keyframes gridMove {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(50px, 50px);
-    }
-  }
-
-  .floating-elements {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-
-  .floating-element {
-    position: absolute;
-    font-size: 2rem;
-    opacity: 0.7;
-    animation: float var(--duration) ease-in-out infinite;
-    animation-delay: var(--delay);
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-  }
-
-  .floating-element:nth-child(1) {
-    top: 15%;
-    left: 10%;
-  }
-  .floating-element:nth-child(2) {
-    top: 70%;
-    right: 15%;
-  }
-  .floating-element:nth-child(3) {
-    bottom: 20%;
-    left: 20%;
-  }
-  .floating-element:nth-child(4) {
-    top: 30%;
-    right: 25%;
-  }
-  .floating-element:nth-child(5) {
-    top: 60%;
-    left: 70%;
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0px) rotate(0deg);
-      opacity: 0.6;
-    }
-    25% {
-      transform: translateY(-20px) rotate(5deg);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translateY(-10px) rotate(-3deg);
-      opacity: 0.4;
-    }
-    75% {
-      transform: translateY(-15px) rotate(2deg);
-      opacity: 0.7;
-    }
-  }
-
-  /* Main Content */
-  .content {
-    position: relative;
-    z-index: 2;
-    text-align: center; /* Keep this for centering the logo, title, and button */
-    max-width: 600px;
-    padding: 2rem;
-    animation: fadeInUp 1s ease-out;
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Logo */
-  .logo-container {
-    margin-bottom: 2rem;
-    animation: logoFloat 3s ease-in-out infinite;
-  }
-
-  @keyframes logoFloat {
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .logo-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-    height: 120px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    margin: 0 auto;
-    transition: all 0.3s ease;
-  }
-
-  .logo-icon:hover {
-    transform: scale(1.05);
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  .logo-icon svg {
-    color: white;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-  }
-
-  /* Title */
-  .project-title {
-    font-size: 4rem;
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  .title-line {
-    display: block;
-    animation: titleSlide 1s ease-out;
-    animation-fill-mode: both;
-  }
-
-  .title-line:nth-child(1) {
-    animation-delay: 0.3s;
-  }
-
-  .title-line:nth-child(2) {
-    animation-delay: 0.6s;
-  }
-
-  .title-line.highlight {
-    background: linear-gradient(45deg, #fff, #f0f9ff, #e0e7ff);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% 200%;
-    animation: titleSlide 1s ease-out 0.6s both,
-      gradientShift 3s ease-in-out infinite;
-  }
-
-  @keyframes titleSlide {
-    from {
-      opacity: 0;
-      transform: translateX(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes gradientShift {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-
-  .project-subtitle {
-    font-size: 1.125rem;
-    font-weight: 400;
-    opacity: 0.95;
-    margin-bottom: 3rem;
-    line-height: 1.7;
-    animation: fadeIn 1s ease-out 0.9s both;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left; /* Adjusted to align text to the left */
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 0.9;
-    }
-  }
-
-  /* Enter Button */
-  .enter-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.25rem 3rem;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50px;
-    color: white;
-    font-size: 1.125rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    animation: buttonPulse 2s ease-in-out infinite,
-      fadeIn 1s ease-out 1.2s both;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .enter-button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
-    transition: left 0.5s ease;
-  }
-
-  .enter-button:hover::before {
-    left: 100%;
-  }
-
-  .enter-button:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  }
-
-  .enter-button:active {
-    transform: translateY(-1px);
-  }
-
-  @keyframes buttonPulse {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-    }
-    50% {
-      box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
-    }
-  }
-
-  .button-text {
-    position: relative;
-    z-index: 1;
-  }
-
-  .enter-button svg {
-    transition: transform 0.3s ease;
-    position: relative;
-    z-index: 1;
-  }
-
-  .enter-button:hover svg {
-    transform: translateX(5px);
-  }
-
-  /* Version Info */
-  .version-info {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 2;
-    font-size: 0.875rem;
-    opacity: 0.7;
-    font-family: "JetBrains Mono", monospace;
-    animation: fadeIn 1s ease-out 1.5s both;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .content {
-      padding: 1rem;
-    }
-
-    .logo-icon {
-      width: 100px;
-      height: 100px;
-    }
-
-    .logo-icon svg {
-      width: 60px;
-      height: 60px;
-    }
-
-    .project-title {
-      font-size: 2.5rem;
-    }
-
-    .project-subtitle {
-      font-size: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .enter-button {
-      padding: 1rem 2rem;
-      font-size: 1rem;
-    }
-
-    .floating-element {
-      font-size: 1.5rem;
-    }
-
-    .version-info {
-      bottom: 1rem;
-      right: 1rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .project-title {
-      font-size: 2rem;
-    }
-
-    .project-subtitle {
-      font-size: 0.9rem;
-    }
-
-    .enter-button {
-      padding: 0.875rem 1.5rem;
-      gap: 0.75rem;
-    }
-  }
-
-  /* Accessibility */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
-
-  /* Focus styles */
-  .enter-button:focus {
-    outline: 3px solid rgba(255, 255, 255, 0.5);
-    outline-offset: 3px;
-  }
-</style>
-
 <body>
-    <div class="presentation-container">
-        <!-- Animated Background -->
-        <div class="animated-background">
-            <div class="floating-elements">
-                <div class="floating-element" style="--delay: 0s; --duration: 20s;">🔐</div>
-                <div class="floating-element" style="--delay: 5s; --duration: 25s;">🛡️</div>
-                <div class="floating-element" style="--delay: 10s; --duration: 30s;">🔒</div>
-                <div class="floating-element" style="--delay: 15s; --duration: 22s;">⚡</div>
-                <div class="floating-element" style="--delay: 8s; --duration: 28s;">🔑</div>
-            </div>
-            <div class="grid-pattern"></div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="content">
-            <div class="logo-container">
-                <div class="logo-icon">
-                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                     </svg>
                 </div>
+                <h1 class="header-title">Gerador de Senhas</h1>
+                <p class="header-subtitle">Gere senhas seguras e aleatórias instantaneamente</p>
             </div>
-           
-            <h1 class="project-title">
-                <span class="title-line"> Gerador de  </span>
-                <span class="title-line highlight"> Senhas digitais</span>
-            </h1>
-            
-            <p class="project-subtitle">
-Olá! Este projeto se chama “Utilizando Matemática para Programar Senhas Seguras”.
-Neste projeto, você verá um gerador de senhas completo, desenvolvido por Alexandre Durval.
-Caso deseje, é possível obter mais informações na opção Sobre o Autor.
-Aproveite o projeto!            </p>
-            
-            <button class="enter-button" onclick="window.location.href='index.html'">
-                <span class="button-text">Entrar</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="5" y1="12" x2="19" y2="12"/>
-                    <polyline points="12,5 19,12 12,19"/>
-                </svg>
-            </button>
-        </div>
+        </header>
 
-        <!-- Version Info -->
-        <div class="version-info">
-            <span>  </span>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Password Display Card -->
+            <section class="password-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        Sua Senha
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="password-input-container">
+                        <input 
+                            type="text" 
+                            id="password-display" 
+                            class="password-input" 
+                            placeholder="Digite ou gere uma senha"
+                            aria-label="Campo de senha - digite ou gere uma senha"
+                        >
+                        <div class="password-actions">
+                            <button 
+                                id="copy-btn" 
+                                class="action-btn" 
+                                title="Copiar senha"
+                                aria-label="Copiar senha para área de transferência"
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                                </svg>
+                            </button>
+                            <button 
+                                id="generate-btn" 
+                                class="action-btn" 
+                                title="Gerar nova senha"
+                                aria-label="Gerar nova senha"
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                                    <path d="M21 3v5h-5"/>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                                    <path d="M8 16H3v5"/>
+                                </svg>
+                            </button>
+                            <button 
+                                id="clear-btn" 
+                                class="action-btn" 
+                                title="Limpar senha"
+                                aria-label="Limpar campo de senha"
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 6L6 18"/>
+                                    <path d="M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Password Strength -->
+                    <div class="strength-container">
+                        <div class="strength-header">
+                            <span class="strength-label">Força da Senha</span>
+                            <span id="strength-text" class="strength-value">Média</span>
+                        </div>
+                        <div class="strength-bar">
+                            <div id="strength-fill" class="strength-fill" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p id="crack-time" class="crack-time">Tempo estimado para quebrar: <strong>Calculando...</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Card -->
+            <section class="settings-card">
+                <div class="card-header">
+                    <h2 class="card-title">Configurações</h2>
+                </div>
+                <div class="card-content">
+                    <!-- Mode Toggle -->
+                    <div class="setting-group">
+                        <h3 class="setting-label">Modo de Geração</h3>
+                        <div class="mode-toggle">
+                            <button id="auto-mode" class="mode-btn active">Automático</button>
+                            <button id="manual-mode" class="mode-btn">Manual</button>
+                        </div>
+                    </div>
+
+                    <!-- Auto Mode Settings -->
+                    <div id="auto-settings" class="mode-settings">
+                        <!-- Length Display -->
+                        <div class="setting-group">
+                            <div class="setting-header">
+                                <label class="setting-label">Comprimento Total</label>
+                                <span id="total-length" class="setting-value">12</span>
+                            </div>
+                        </div>
+
+                        <!-- Character Type Inputs -->
+                        <div class="setting-group">
+                            <h3 class="setting-label">Composição da Senha</h3>
+                            <p class="setting-description">Especifique a quantidade exata de cada tipo de caractere</p>
+                            
+                            <div class="char-inputs">
+                                <div class="char-input-group">
+                                    <label for="uppercase-count" class="char-label">
+                                        <span class="char-icon">A</span>
+                                        Maiúsculas
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="number-btn minus" data-target="uppercase-count">-</button>
+                                        <input type="number" id="uppercase-count" class="char-count" value="4" min="0" max="50" aria-label="Quantidade de letras maiúsculas">
+                                        <button type="button" class="number-btn plus" data-target="uppercase-count">+</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="char-input-group">
+                                    <label for="lowercase-count" class="char-label">
+                                        <span class="char-icon">a</span>
+                                        Minúsculas
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="number-btn minus" data-target="lowercase-count">-</button>
+                                        <input type="number" id="lowercase-count" class="char-count" value="4" min="0" max="50" aria-label="Quantidade de letras minúsculas">
+                                        <button type="button" class="number-btn plus" data-target="lowercase-count">+</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="char-input-group">
+                                    <label for="numbers-count" class="char-label">
+                                        <span class="char-icon">1</span>
+                                        Números
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="number-btn minus" data-target="numbers-count">-</button>
+                                        <input type="number" id="numbers-count" class="char-count" value="2" min="0" max="50" aria-label="Quantidade de números">
+                                        <button type="button" class="number-btn plus" data-target="numbers-count">+</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="char-input-group">
+                                    <label for="symbols-count" class="char-label">
+                                        <span class="char-icon">@</span>
+                                        Símbolos
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="number-btn minus" data-target="symbols-count">-</button>
+                                        <input type="number" id="symbols-count" class="char-count" value="2" min="0" max="50" aria-label="Quantidade de símbolos">
+                                        <button type="button" class="number-btn plus" data-target="symbols-count">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Mode Settings -->
+                    <div id="manual-settings" class="mode-settings" style="display: none;">
+                        <div class="setting-group">
+                            <h3 class="setting-label">Modo Manual</h3>
+                            <p class="setting-description">Digite sua própria senha no campo acima. A análise de força será feita automaticamente.</p>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Options -->
+                    <div class="setting-group">
+                        <h3 class="setting-label">Opções Avançadas</h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="avoid-similar" checked>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Evitar caracteres similares (1, l, I, 0, O)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="avoid-ambiguous">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Evitar caracteres ambíguos ({}, [], (), /\, etc)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="ensure-each-type">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Garantir pelo menos um de cada tipo selecionado</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="error-message" class="error-message" role="alert" style="display: none;">
+                        Selecione pelo menos um caractere
+                    </div>
+
+                    <button id="generate-new-btn" class="generate-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                            <path d="M21 3v5h-5"/>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                            <path d="M8 16H3v5"/>
+                        </svg>
+                        Gerar Nova Senha
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Security Tips -->
+        <section class="tips-card">
+            <div class="card-header">
+                <h2 class="card-title">Dicas de Segurança</h2>
+            </div>
+            <div class="card-content">
+                <div class="tips-grid">
+                    <div class="tips-column">
+                        <h4 class="tips-title good">✅ Faça:</h4>
+                        <ul class="tips-list">
+                            <li>Use senhas únicas para cada conta</li>
+                            <li>Prefira senhas com 12+ caracteres</li>
+                            <li>Use um gerenciador de senhas</li>
+                            <li>Ative autenticação de dois fatores</li>
+                        </ul>
+                    </div>
+                    <div class="tips-column">
+                        <h4 class="tips-title bad">❌ Evite:</h4>
+                        <ul class="tips-list">
+                            <li>Informações pessoais nas senhas</li>
+                            <li>Reutilizar senhas importantes</li>
+                            <li>Compartilhar senhas por mensagem</li>
+                            <li>Usar senhas óbvias ou comuns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert" aria-live="polite">
+            <div class="toast-content">
+                <span id="toast-message">Senha copiada!</span>
+                <button id="toast-close" class="toast-close" aria-label="Fechar notificação">×</button>
+            </div>
         </div>
     </div>
 
-    <script >
-        class PresentationPage {
-  constructor() {
-    this.initializeAnimations()
-    this.initializeKeyboardNavigation()
-    this.initializeParallax()
-  }
+    <!-- Floating Contact Button -->
+    <div class="floating-contact">
+        <button class="floating-contact-btn" onclick="window.location.href='2.html'" aria-label="Entre em contato">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <span class="floating-contact-text">Sobre o autor</span>
+        </button>
+    </div>
 
-  initializeAnimations() {
-    // Add entrance animation delay to elements
-    const elements = [
-      { selector: ".logo-container", delay: 0 },
-      { selector: ".project-title .title-line:first-child", delay: 300 },
-      { selector: ".project-title .title-line:last-child", delay: 600 },
-      { selector: ".project-subtitle", delay: 900 },
-      { selector: ".enter-button", delay: 1200 },
-      { selector: ".version-info", delay: 1500 },
-    ]
-
-    elements.forEach(({ selector, delay }) => {
-      const element = document.querySelector(selector)
-      if (element) {
-        element.style.animationDelay = `${delay}ms`
-      }
-    })
-  }
-
-  initializeKeyboardNavigation() {
-    // Allow Enter key to trigger the button
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        const button = document.querySelector(".enter-button")
-        if (button) {
-          button.click()
-        }
-      }
-    })
-
-    // Focus the button after animations
-    setTimeout(() => {
-      const button = document.querySelector(".enter-button")
-      if (button) {
-        button.focus()
-      }
-    }, 2000)
-  }
-
-  initializeParallax() {
-    // Subtle mouse movement parallax effect
-    document.addEventListener("mousemove", (e) => {
-      const { clientX, clientY } = e
-      const { innerWidth, innerHeight } = window
-
-      const xPercent = (clientX / innerWidth - 0.5) * 2
-      const yPercent = (clientY / innerHeight - 0.5) * 2
-
-      // Move floating elements slightly based on mouse position
-      const floatingElements = document.querySelectorAll(".floating-element")
-      floatingElements.forEach((element, index) => {
-        const multiplier = (index + 1) * 0.5
-        element.style.transform = `translate(${xPercent * multiplier}px, ${yPercent * multiplier}px)`
-      })
-
-      // Move logo slightly
-      const logo = document.querySelector(".logo-container")
-      if (logo) {
-        logo.style.transform = `translate(${xPercent * 2}px, ${yPercent * 2}px)`
-      }
-    })
-  }
-}
-
-// Initialize when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  new PresentationPage()
-
-  // Add loading effect
-  document.body.style.opacity = "0"
-  document.body.style.transition = "opacity 0.5s ease"
-
-  setTimeout(() => {
-    document.body.style.opacity = "1"
-  }, 100)
-
-  // Preload next page for faster navigation
-  const link = document.createElement("link")
-  link.rel = "prefetch"
-  link.href = "index.html"
-  document.head.appendChild(link)
-})
-
-// Add some interactive effects
-document.addEventListener("DOMContentLoaded", () => {
-  const button = document.querySelector(".enter-button")
-
-  if (button) {
-    // Add click ripple effect
-    button.addEventListener("click", function (e) {
-      const ripple = document.createElement("span")
-      const rect = this.getBoundingClientRect()
-      const size = Math.max(rect.width, rect.height)
-      const x = e.clientX - rect.left - size / 2
-      const y = e.clientY - rect.top - size / 2
-
-      ripple.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        transform: scale(0);
-        animation: ripple 0.6s ease-out;
-        pointer-events: none;
-      `
-
-      this.appendChild(ripple)
-
-      setTimeout(() => {
-        ripple.remove()
-      }, 600)
-    })
-  }
-})
-
-// Add ripple animation CSS
-const style = document.createElement("style")
-style.textContent = `
-  @keyframes ripple {
-    to {
-      transform: scale(2);
-      opacity: 0;
-    }
-  }
-  
-  .enter-button {
-    position: relative;
-    overflow: hidden;
-  }
-`
-document.head.appendChild(style)
-
-    </script>
+    <script src="xn.js"></script>
 </body>
 </html>
