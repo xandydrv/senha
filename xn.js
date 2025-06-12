@@ -61,6 +61,7 @@ class PasswordGenerator {
       }
     })
 
+  
     const countInputs = [this.uppercaseCount, this.lowercaseCount, this.numbersCount, this.symbolsCount]
 
     countInputs.forEach((input) => {
@@ -93,6 +94,7 @@ class PasswordGenerator {
       })
     })
 
+
     ;[this.avoidSimilar, this.avoidAmbiguous, this.ensureEachType].forEach((checkbox) => {
       checkbox.addEventListener("change", () => {
         if (!this.isManualMode) {
@@ -114,7 +116,6 @@ class PasswordGenerator {
     })
     this.clearBtn.addEventListener("click", () => this.clearPassword())
 
-    
     this.toastClose.addEventListener("click", () => this.hideToast())
 
     document.addEventListener("keydown", (e) => {
@@ -282,6 +283,7 @@ class PasswordGenerator {
       return
     }
 
+
     const uppercaseUsed = /[A-Z]/.test(password)
     const lowercaseUsed = /[a-z]/.test(password)
     const numbersUsed = /[0-9]/.test(password)
@@ -316,7 +318,8 @@ class PasswordGenerator {
     if (strength) {
       this.strengthText.textContent = strengthLabels[strength]
       this.strengthText.className = `strength-value ${strength}`
-      this.strengthFill.className = `strength-fill ${strength}`s
+      this.strengthFill.className = `strength-fill ${strength}`
+
       const percentage = strength === "weak" ? 33 : strength === "medium" ? 66 : 100
       this.strengthFill.setAttribute("aria-valuenow", percentage)
       this.strengthFill.setAttribute("aria-label", `Força da senha: ${strengthLabels[strength]}`)
@@ -327,6 +330,7 @@ class PasswordGenerator {
       this.strengthFill.setAttribute("aria-valuenow", 0)
     }
 
+    
     this.updateCrackTime(entropy)
   }
 
